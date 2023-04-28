@@ -4,7 +4,10 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 type Data = {
     data: any[]
     pagination: any
+    name: any
 }
+
+
 
 
 export default async function handler(
@@ -12,7 +15,7 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     if (req.method !== 'GET') {
-        return res.status(404).json({ name: 'method not supported' })
+        return res.status(404).json({ name: 'method not supported' } as Data);
     }
 
     const response = await fetch('https://js-post-api.herokuapp.com/api/posts?_page=1');

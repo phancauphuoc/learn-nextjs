@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPropsContext } from 'next'
+import Link from 'next/link'
 import React from 'react'
 
 export interface PostPageProps {
@@ -6,11 +7,16 @@ export interface PostPageProps {
 }
 
 const index = ({ posts }: PostPageProps) => {
+
+    console.log('post index posts ==>', posts);
+
     return (
         <div>
             <h1>Post data list</h1>
             <ul>
-                {posts.map(post => <li key={post.id}>{post.title}</li>)}
+                {posts ? posts.map(post => <li key={post.id}>
+                    <Link href={`post/${post.id}`}>{post.title}</Link>
+                </li>) : <>dataNull</>}
             </ul>
 
 
@@ -24,7 +30,7 @@ export const getStaticProps: GetStaticProps<PostPageProps> = async (context: Get
 
     const response = await fetch('https://js-post-api.herokuapp.com/api/posts?_page=1');
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     return {
         props: {
